@@ -38,7 +38,7 @@ function hideOverlay() {
         renderer: 'svg', // ou 'canvas' se preferir
         loop: true,
         autoplay: true,
-        path: 'https://rafawga.github.io/preloaderJSLottie/certifyanimation.json',
+        path: 'https://rafawga.github.io/preloaderJSLottie/loader.json',
     });
 }
 
