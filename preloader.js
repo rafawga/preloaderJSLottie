@@ -51,7 +51,7 @@
                     renderer: 'svg', // ou 'canvas' se preferir
                     loop: true,
                     autoplay: true,
-                    path: 'https://rafawga.github.io/preloaderJSLottie/loader.json',
+                    path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
                 });
                 lottieContainer.dataset.loaded = true;
             }
