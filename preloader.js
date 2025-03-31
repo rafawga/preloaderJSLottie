@@ -12,14 +12,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 1); /* alterado para fundo preto opaco */
-            z-index: 999;
+            background-color: black;
+            z-index: 9999;
         `;
-        document.body.appendChild(overlay);
-    }
 
-    // Verifica se o contêiner Lottie já existe para evitar duplicação
-    if (!document.getElementById('lottieContainer')) {
+        // Cria o contêiner Lottie dentro do overlay
         const lottieContainer = document.createElement('div');
         lottieContainer.id = 'lottieContainer';
         lottieContainer.style.cssText = `
@@ -27,37 +24,27 @@
             height: 100%;
             max-width: 500px;
             max-height: 500px;
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         `;
-        document.body.appendChild(lottieContainer);
+
+        overlay.appendChild(lottieContainer);
+        document.body.appendChild(overlay);
     }
 
-    function hideOverlay() {
-        const overlay = document.getElementById('loader');
+    function showLottie() {
         const lottieContainer = document.getElementById('lottieContainer');
 
-        if (overlay && lottieContainer) {
-            overlay.style.display = 'none';
-            lottieContainer.style.display = 'block';
-
-            // Verifica se a animação já está carregada para evitar duplicação
-            if (!lottieContainer.dataset.loaded) {
-                lottie.loadAnimation({
-                    container: lottieContainer,
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
-                });
-                lottieContainer.dataset.loaded = true;
-            }
+        if (lottieContainer && !lottieContainer.dataset.loaded) {
+            lottie.loadAnimation({
+                container: lottieContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
+            });
+            lottieContainer.dataset.loaded = true;
         }
     }
 
-    document.addEventListener('DOMContentLoaded', hideOverlay);
-    window.addEventListener('load', hideOverlay);
+    document.addEventListener('DOMContentLoaded', showLottie);
+    window.addEventListener('load', showLottie);
 })();
