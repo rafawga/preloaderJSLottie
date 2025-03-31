@@ -1,5 +1,5 @@
 (function () {
-    // Cria o overlay com fundo preto e Lottie centralizado
+    // Cria o overlay com fundo preto e animação centralizada
     if (!document.getElementById('loader')) {
         const overlay = document.createElement('div');
         overlay.id = 'loader';
@@ -29,13 +29,6 @@
         document.body.appendChild(overlay);
     }
 
-    function hideLoader() {
-        const overlay = document.getElementById('loader');
-        if (overlay) {
-            overlay.remove(); // remove tudo quando o app estiver carregado
-        }
-    }
-
     function showLottie() {
         const lottieContainer = document.getElementById('lottieContainer');
         if (lottieContainer && !lottieContainer.dataset.loaded) {
@@ -50,9 +43,22 @@
         }
     }
 
-    // Mostra animação o quanto antes
-    document.addEventListener('DOMContentLoaded', showLottie);
+    // Marcar o tempo de início do loader
+    const startTime = Date.now();
 
-    // Remove tudo quando o app estiver totalmente carregado
+    function hideLoader() {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = 1000 - elapsedTime;
+
+        // Garante no mínimo 1 segundo de exibição
+        setTimeout(() => {
+            const overlay = document.getElementById('loader');
+            if (overlay) {
+                overlay.remove();
+            }
+        }, remainingTime > 0 ? remainingTime : 0);
+    }
+
+    document.addEventListener('DOMContentLoaded', showLottie);
     window.addEventListener('load', hideLoader);
 })();
