@@ -12,7 +12,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(0, 0, 0, 1); /* alterado para fundo preto opaco */
             z-index: 999;
         `;
         document.body.appendChild(overlay);
@@ -48,7 +48,7 @@
             if (!lottieContainer.dataset.loaded) {
                 lottie.loadAnimation({
                     container: lottieContainer,
-                    renderer: 'svg', // ou 'canvas' se preferir
+                    renderer: 'svg',
                     loop: true,
                     autoplay: true,
                     path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
