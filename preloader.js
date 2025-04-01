@@ -12,7 +12,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(0, 0, 0, 0.7); /* fundo preto translúcido */
             z-index: 999;
         `;
         document.body.appendChild(overlay);
@@ -41,9 +41,8 @@
         const lottieContainer = document.getElementById('lottieContainer');
 
         if (overlay && lottieContainer) {
-            overlay.style.display = 'none'; // esconde o fundo branco
-            lottieContainer.style.display = 'block'; // mostra só a animação
-            // Carrega a animação se ainda não estiver carregada
+            overlay.style.display = 'none';             // Esconde o fundo preto
+            lottieContainer.style.display = 'block';    // Mostra a animação
             if (!lottieContainer.dataset.loaded) {
                 lottie.loadAnimation({
                     container: lottieContainer,
