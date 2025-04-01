@@ -1,5 +1,5 @@
-(function () {
-    // Cria o overlay com fundo preto e animação centralizada
+(function() {
+    // Verifica se o overlay já existe para evitar duplicação
     if (!document.getElementById('loader')) {
         const overlay = document.createElement('div');
         overlay.id = 'loader';
@@ -12,10 +12,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: black;
-            z-index: 9999;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 999;
         `;
+        document.body.appendChild(overlay);
+    }
 
+    // Verifica se o contêiner Lottie já existe para evitar duplicação
+    if (!document.getElementById('lottieContainer')) {
         const lottieContainer = document.createElement('div');
         lottieContainer.id = 'lottieContainer';
         lottieContainer.style.cssText = `
@@ -23,42 +27,36 @@
             height: 100%;
             max-width: 500px;
             max-height: 500px;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         `;
-
-        overlay.appendChild(lottieContainer);
-        document.body.appendChild(overlay);
+        document.body.appendChild(lottieContainer);
     }
 
-    function showLottie() {
+    function hideOverlay() {
+        const overlay = document.getElementById('loader');
         const lottieContainer = document.getElementById('lottieContainer');
-        if (lottieContainer && !lottieContainer.dataset.loaded) {
-            lottie.loadAnimation({
-                container: lottieContainer,
-                renderer: 'svg',
-                loop: true,
-                autoplay: true,
-                path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
-            });
-            lottieContainer.dataset.loaded = true;
+
+        if (overlay && lottieContainer) {
+            overlay.style.display = 'none'; // esconde o fundo branco
+            lottieContainer.style.display = 'block'; // mostra só a animação
+            // Carrega a animação se ainda não estiver carregada
+            if (!lottieContainer.dataset.loaded) {
+                lottie.loadAnimation({
+                    container: lottieContainer,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'https://rafawga.github.io/preloaderJSLottie/certify_animation.json',
+                });
+                lottieContainer.dataset.loaded = true;
+            }
         }
     }
 
-    // Marcar o tempo de início do loader
-    const startTime = Date.now();
-
-    function hideLoader() {
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = 1000 - elapsedTime;
-
-        // Garante no mínimo 1 segundo de exibição
-        setTimeout(() => {
-            const overlay = document.getElementById('loader');
-            if (overlay) {
-                overlay.remove();
-            }
-        }, remainingTime > 0 ? remainingTime : 0);
-    }
-
-    document.addEventListener('DOMContentLoaded', showLottie);
-    window.addEventListener('load', hideLoader);
+    document.addEventListener('DOMContentLoaded', hideOverlay);
+    window.addEventListener('load', hideOverlay);
 })();
